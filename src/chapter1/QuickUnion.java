@@ -2,44 +2,42 @@ package chapter1;
 
 /**
  * @author wgq
- * @date 2020/6/10 9:00 下午
+ * @date 2020/6/10 9:16 下午
  */
-public class QuickUnionFind extends UnionFInd {
+public class QuickUnion extends UnionFInd {
 
     /**
      * 以整数标识（0 到 N-1 ) 初始化 N个分量
      *
      * @param N 分量
      */
-    public QuickUnionFind(int N) {
+    public QuickUnion(int N) {
         super(N);
     }
 
     @Override
     public int find(int p) {
-        return id[p];
+        while (p != id[p]) {
+            p = id[p];
+        }
+        return p;
     }
 
     @Override
     public void union(int p, int q) {
 
-        int pId = find(p);
-        int qId = find(q);
+        int pRoot = find(p);
+        int qRoot = find(q);
 
-        if (pId == qId) return;
+        if (pRoot == qRoot) return;
 
-        for (int i = 0; i < id.length; i++) {
-            if (id[i] == pId) {
-                id[i] = qId;
-            }
-        }
-        count --;
+        id[pRoot] = qRoot;
+        count--;
     }
-
 
     public static void main(String[] args) {
 
-        QuickUnionFind union = new QuickUnionFind(10);
+        QuickUnion union = new QuickUnion(10);
 
         union.union(4, 3);
         union.union(3, 8);
