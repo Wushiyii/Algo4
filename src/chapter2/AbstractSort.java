@@ -30,7 +30,7 @@ public abstract class AbstractSort {
         return true;
     }
 
-    protected void check(int[] arr) {
+    public void check(int[] arr) {
         sort(arr);
         show(arr);
         System.out.println(isSorted(arr));
