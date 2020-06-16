@@ -1,11 +1,11 @@
 package chapter3;
 
 /**
- * 无序链表实现符号表
+ * 无序链表实现符号表(顺序搜索)
  * @author wgq
  * @date 2020/6/16 2:11 下午
  */
-public class UnOrderedLinkTable<K extends Comparable<K>, V> extends AbstractTable<K, V> {
+public class UnOrderedLinkSequenceTable<K extends Comparable<K>, V> extends AbstractSequenceTable<K, V> {
 
     private Node first;
 
@@ -39,5 +39,15 @@ public class UnOrderedLinkTable<K extends Comparable<K>, V> extends AbstractTabl
             this.value = value;
             this.next = next;
         }
+    }
+
+    public static void main(String[] args) {
+        ST<String, String> st = new UnOrderedLinkSequenceTable<>();
+        st.put("123", "456");
+        st.put("123", "999");
+        st.put("567", "789");
+
+        System.out.println(st.get("123"));
+        System.out.println(st.get("567"));
     }
 }
