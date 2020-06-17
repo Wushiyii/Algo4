@@ -1,12 +1,12 @@
 package chapter3;
 
-public class BinarySearchSequenceTable<K extends Comparable<K>, V> extends AbstractSequenceTable<K, V> {
+public class BinarySearchSequenceSymbolTable<K extends Comparable<K>, V> extends AbstractSymbolTable<K, V> {
 
     private K[] keys;
     private V[] values;
     private int N;
 
-    public BinarySearchSequenceTable(int capacity) {
+    public BinarySearchSequenceSymbolTable(int capacity) {
         keys = (K[]) new Comparable[capacity];
         values = (V[]) new Object[capacity];
     }
@@ -64,7 +64,7 @@ public class BinarySearchSequenceTable<K extends Comparable<K>, V> extends Abstr
     }
 
     public static void main(String[] args) {
-        ST<String, String> st = new BinarySearchSequenceTable<>(10);
+        ST<String, String> st = new BinarySearchSequenceSymbolTable<>(10);
         st.put("CCC", "11111");
         st.put("ZZZ", "22222");
         st.put("BBB", "33333");

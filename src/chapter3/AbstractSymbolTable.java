@@ -5,7 +5,7 @@ package chapter3;
  * @author wgq
  * @date 2020/6/16 1:10 下午
  */
-public abstract class AbstractTable<K extends Comparable<K>, V> implements ST<K, V> {
+public abstract class AbstractSymbolTable<K extends Comparable<K>, V> implements ST<K, V> {
 
     @Override
     public abstract void put(K key, V value);
