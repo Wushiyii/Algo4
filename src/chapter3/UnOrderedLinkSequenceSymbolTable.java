@@ -5,7 +5,7 @@ package chapter3;
  * @author wgq
  * @date 2020/6/16 2:11 下午
  */
-public class UnOrderedLinkSequenceTable<K extends Comparable<K>, V> extends AbstractSequenceTable<K, V> {
+public class UnOrderedLinkSequenceSymbolTable<K extends Comparable<K>, V> extends AbstractSymbolTable<K, V> {
 
     private Node first;
 
@@ -42,7 +42,7 @@ public class UnOrderedLinkSequenceTable<K extends Comparable<K>, V> extends Abst
     }
 
     public static void main(String[] args) {
-        ST<String, String> st = new UnOrderedLinkSequenceTable<>();
+        ST<String, String> st = new UnOrderedLinkSequenceSymbolTable<>();
         st.put("123", "456");
         st.put("123", "999");
         st.put("567", "789");
