@@ -74,9 +74,31 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> extends AbstractSy
         h.right.color = BLACK;
     }
 
+    // 假设节点为红色，且左节点与左节点的左节点为黑色。将左节点或者左节点的子节点改为红色
+    private Node moveRedLeft(Node h) {
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+        }
+        return h;
+    }
+
+    // 假设结点h为红色 ，h.right 和 h.right.left 都是黑色，
+
+    // 将 h.right 或者 h.right 的子结点之一变红
+    private Node moveRedRight(Node h) {
+        flipColors(h);
+        if (isRed(h.left.left)) {
+            h = rotateRight(h);
+        }
+        return h;
+    }
+
     @Override
     public void put(Key key, Value value) {
         root = put(root, key, value);
+        root.color = BLACK;
     }
 
     private Node put(Node h, Key key, Value value) {
@@ -96,13 +118,16 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> extends AbstractSy
 
         //旋转操作
 
-        //右节点为红链接、左节点非红链接
+        //右节点为红链接、左节点非红链接 则左旋
         if (isRed(h.right) && !isRed(h.left)) {
             h = rotateLeft(h);
         }
+
+        //左节点为红、且左节点的左节点也为红，则右旋，并且在下一判断中进行颜色反转
         if (isRed(h.left) && isRed(h.left.left)) {
             h = rotateRight(h);
         }
+        //如果左节点与右节点皆为红色，则反转颜色
         if (isRed(h.left) && isRed(h.right)) {
             flipColors(h);
         }
@@ -115,9 +140,22 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> extends AbstractSy
 
     @Override
     public Value get(Key key) {
-        return null;
+        return get(root, key);
     }
 
+    private Value get(Node x, Key key) {
+        if (x == null) {
+            return null;
+        }
+        int compare = key.compareTo(x.key);
+        if (compare < 0) {
+            return get(x.left, key);
+        } else if (compare > 0) {
+            return get(x.right, key);
+        } else {
+            return x.val;
+        }
+    }
 
 
 
@@ -132,6 +170,34 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> extends AbstractSy
         inOrderPrint(node.right);
 
     }
+
+    public boolean isBalanced() {
+        int black = 0;
+        Node x = root;
+        while (x != null) {
+            if (!isRed(x)) {
+                black++;
+            }
+            x = x.left;
+        }
+        return isBalanced(root, black);
+    }
+
+    private boolean isBalanced(Node x, int black) {
+        if (x == null) {
+            return black == 0;
+        }
+        if (!isRed(x)) {
+            black--;
+        }
+        return isBalanced(x.left, black) && isBalanced(x.right, black);
+    }
+
+    public boolean contains(Key key) {
+        return get(key) != null;
+    }
+
+
 
 
     public static void main(String[] args) {
@@ -148,6 +214,12 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> extends AbstractSy
         redBlackTree.put("L", "L");
 
         redBlackTree.inOrderPrint();
+
+        System.out.println(redBlackTree.isBalanced());
+
+        System.out.println(redBlackTree.get("R"));
+        System.out.println(redBlackTree.get("H"));
+        System.out.println(redBlackTree.get("Z"));
     }
 
 
