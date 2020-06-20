@@ -1,7 +1,7 @@
 package chapter3;
 
 /**
- * Hash散列表
+ * Hash散列表 (拉链法)
  * @author wgq
  * @date 2020/6/20 2:10 下午
  */
