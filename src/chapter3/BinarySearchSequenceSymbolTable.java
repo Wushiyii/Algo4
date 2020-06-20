@@ -6,6 +6,10 @@ public class BinarySearchSequenceSymbolTable<K extends Comparable<K>, V> extends
     private V[] values;
     private int N;
 
+    public BinarySearchSequenceSymbolTable() {
+        this(16);
+    }
+
     public BinarySearchSequenceSymbolTable(int capacity) {
         keys = (K[]) new Comparable[capacity];
         values = (V[]) new Object[capacity];
