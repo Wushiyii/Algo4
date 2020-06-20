@@ -27,14 +27,16 @@ public class LinearProbingHashSymbolTable<Key extends Comparable<Key>, Value> ex
     }
 
 
-    public void resize(int toBeSize) {
-        Key[] keyTemp = (Key[]) new Comparable[toBeSize];
-        Value[] valueTemp = (Value[]) new Object[toBeSize];
-        if (N >= 0) System.arraycopy(keys, 0, keyTemp, 0, N);
-        keys = keyTemp;
-
-        if (N >= 0) System.arraycopy(values, 0, valueTemp, 0, N);
-        values = valueTemp;
+    public void resize(int capacity) {
+        LinearProbingHashSymbolTable<Key, Value> t = new LinearProbingHashSymbolTable<>(capacity);
+        for (int i = 0; i < M; i++) {
+            if (keys[i] != null) {
+                t.put(keys[i], values[i]);
+            }
+        }
+        keys = t.keys;
+        values = t.values;
+        M = t.M;
     }
 
 
@@ -66,6 +68,32 @@ public class LinearProbingHashSymbolTable<Key extends Comparable<Key>, Value> ex
         return null;
     }
 
+    @Override
+    public void delete(Key key) {
+        if (!contains(key)) return;
+        int i = hash(key);
+        while (!keys[i].equals(key)) {
+            i = (i + 1) % M;
+        }
+        keys[i] = null;
+        values[i] = null;
+
+        //往右的并且为线性插入的元素，进行左移
+        i = (i + 1) % M;
+        while (keys[i] != null) {
+            Key keyToRedo = keys[i];
+            Value valueToRedo = values[i];
+            keys[i] = null;
+            values[i] = null;
+            N--;
+            put(keyToRedo, valueToRedo);
+            i = (i + 1) % M;
+        }
+
+        N--;
+        if (N > 0 && N == M/8) resize(M / 2);
+    }
+
     public static void main(String[] args) {
         LinearProbingHashSymbolTable<String, String> st = new LinearProbingHashSymbolTable<>(10);
         st.put("CCC", "11111");
@@ -83,6 +111,10 @@ public class LinearProbingHashSymbolTable<Key extends Comparable<Key>, Value> ex
         System.out.println(st.get("ZZZ"));
         System.out.println(st.get("A"));
         System.out.println(st.get("X"));
+        System.out.println(st.get("V"));
+
+        st.delete("V");
+        System.out.println("delete");
         System.out.println(st.get("V"));
     }
 }
