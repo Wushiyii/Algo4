@@ -1,6 +1,7 @@
 package chapter3;
 
 /**
+ * Hash散列表
  * @author wgq
  * @date 2020/6/20 2:10 下午
  */
@@ -36,4 +37,16 @@ public class SeparateChainingHashSymbolTable<Key extends Comparable<Key>, Value>
         return st[hash(key)].get(key);
     }
 
+
+    public static void main(String[] args) {
+        SeparateChainingHashSymbolTable<String, String> st = new SeparateChainingHashSymbolTable<>(10);
+        st.put("CCC", "11111");
+        st.put("ZZZ", "22222");
+        st.put("BBB", "33333");
+        st.put("XXX", "44444");
+        st.put("VVV", "55555");
+
+        System.out.println(st.get("ZZZ"));
+        System.out.println(st.get("BBB"));
+    }
 }
