@@ -1,6 +1,10 @@
 package chapter3;
 
-
+/**
+ * 左倾红黑树 LLRB
+ * @param <Key>
+ * @param <Value>
+ */
 public class RedBlackTree<Key extends Comparable<Key>, Value> extends AbstractSymbolTable<Key, Value> {
 
     private static final boolean RED = true;
