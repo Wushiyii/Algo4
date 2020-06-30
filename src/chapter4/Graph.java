@@ -75,7 +75,7 @@ public abstract class Graph {
 
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder("V:" + V() + ", E:" + E());
+        StringBuilder s = new StringBuilder("V:" + V() + ", E:" + E() + "\n");
         for (int v = 0; v < V(); v++) {
             s.append(v).append(": ");
             for (Integer w : adj(v)) {
