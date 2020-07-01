@@ -7,7 +7,7 @@ package chapter4;
  */
 public class DepthFirstCC implements CC{
 
-    private boolean marked[];
+    private boolean[] marked;
     private int[] id;
     private int count;
 

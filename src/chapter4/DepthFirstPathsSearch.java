@@ -8,7 +8,7 @@ import java.util.Stack;
  */
 public class DepthFirstPathsSearch implements PathSearch {
 
-    private boolean marked[];
+    private boolean[] marked;
     private int[] edgeTo;
     private final int s;
 

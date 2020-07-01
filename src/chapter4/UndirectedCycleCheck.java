@@ -7,7 +7,7 @@ package chapter4;
  */
 public class UndirectedCycleCheck {
 
-    private boolean marked[];
+    private boolean[] marked;
     private boolean hasCycle;
 
     public UndirectedCycleCheck(Graph G) {
