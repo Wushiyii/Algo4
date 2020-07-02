@@ -1,4 +1,4 @@
-package chapter4;
+package chapter4.one;
 
 /**
  * 无向图是否有环检测
