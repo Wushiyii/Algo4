@@ -67,6 +67,16 @@ public class DirectedCycle {
 
         System.out.println(directedCycle.hasCycle());
 
+        Stack<Integer> cycle = directedCycle.cycle;
+
+        StringBuilder path = new StringBuilder();
+        while (!cycle.isEmpty()) {
+            path.append(cycle.pop() + "-");
+        }
+        path.deleteCharAt(path.length() - 1);
+
+        System.out.println(path);
+
     }
 
 }
