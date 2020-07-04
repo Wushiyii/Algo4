@@ -1,33 +1,41 @@
-package chapter4.one;
+package chapter4.p4_1;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
  * @author wgq
- * @date 2020/7/1 11:45 上午
+ * @date 2020/7/1 2:28 下午
  */
-public class DepthFirstPathsSearch implements PathSearch {
+public class BreadthFirstPathSearch implements PathSearch {
 
     private boolean[] marked;
     private int[] edgeTo;
     private final int s;
 
-
-    public DepthFirstPathsSearch(Graph G, int s) {
+    BreadthFirstPathSearch(Graph G, int s) {
         this.marked = new boolean[G.V()];
         this.edgeTo = new int[G.V()];
         this.s = s;
-        dfs(G, s);
+        bfs(G, s);
     }
 
-    private void dfs(Graph g, int v) {
-        marked[v] = true;
-        for (Integer w : g.adj(v)) {
-            if (!marked[w]) {
-                edgeTo[w] = v;
-                dfs(g, w);
+    private void bfs(Graph G, int s) {
+        Queue<Integer> queue = new LinkedList<>();
+        marked[s] = true;
+        queue.offer(s);
+        while (!queue.isEmpty()) {
+            Integer v = queue.poll();
+            for (Integer w : G.adj(v)) {
+                if (!marked[w]) {
+                    edgeTo[w] = v;
+                    marked[w] = true;
+                    queue.offer(w);
+                }
             }
         }
+
     }
 
 
@@ -38,16 +46,17 @@ public class DepthFirstPathsSearch implements PathSearch {
 
     @Override
     public Iterable<Integer> pathTo(int v) {
+
         if (!hasPathTo(v)) {
             return null;
         }
 
-        Stack<Integer> path = new Stack<>();
+        Stack<Integer> stack = new Stack<>();
         for (int x = v; x != s; x = edgeTo[x]) {
-            path.push(x);
+            stack.push(x);
         }
-        path.push(s);
-        return path;
+        stack.push(s);
+        return stack;
     }
 
     public static void main(String[] args) {
@@ -65,7 +74,7 @@ public class DepthFirstPathsSearch implements PathSearch {
 
         int s = 0;
 
-        DepthFirstPathsSearch pathsSearch = new DepthFirstPathsSearch(graph, s);
+        BreadthFirstPathSearch pathsSearch = new BreadthFirstPathSearch(graph, s);
 
         for (int v = 0; v < graph.V(); v++) {
             System.out.print(s + " to " + v + ": ");

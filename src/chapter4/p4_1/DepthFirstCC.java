@@ -1,4 +1,4 @@
-package chapter4.one;
+package chapter4.p4_1;
 
 /**
  * DFS实现连通分量判断
