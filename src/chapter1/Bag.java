@@ -4,73 +4,89 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Bag<Item> implements Iterable<Item>{
+    private Node<Item> first;    // beginning of bag
+    private int n;               // number of elements in bag
 
-    //节点
-    public class Node{
+    // helper linked list class
+    private static class Node<Item> {
         private Item item;
-        private Node next;
+        private Node<Item> next;
     }
 
-    //背包中的元素个数
-    private int nums;
-    //背包起始位置
-    private Node first;
-
-    //初始化一个空的背包
-    public Bag(){
+    /**
+     * Initializes an empty bag.
+     */
+    public Bag() {
         first = null;
-        nums = 0;
+        n = 0;
     }
 
-    //判断背包是否为空
-    public boolean isEmpty(){
+    /**
+     * Returns true if this bag is empty.
+     *
+     * @return {@code true} if this bag is empty;
+     *         {@code false} otherwise
+     */
+    public boolean isEmpty() {
         return first == null;
     }
 
-    //返回背包的元素个数
-    public int size(){
-        return nums;
+    /**
+     * Returns the number of items in this bag.
+     *
+     * @return the number of items in this bag
+     */
+    public int size() {
+        return n;
     }
 
-    //使用头插法添加元素
-    public void add(Item item){
-        //替换原始的第一个元素
-        Node oldNode = first;
-        //初始化一个新的元素
-        first = new Node();
-        //赋值
+    /**
+     * Adds the item to this bag.
+     *
+     * @param  item the item to add to this bag
+     */
+    public void add(Item item) {
+        Node<Item> oldfirst = first;
+        first = new Node<Item>();
         first.item = item;
-        first.next = oldNode;
-        //背包个数加1
-        nums++;
+        first.next = oldfirst;
+        n++;
     }
 
 
-    //迭代器可以遍历元素
-    @Override
-    public Iterator<Item> iterator() {
-        return new BagIterator();
+    /**
+     * Returns an iterator that iterates over the items in this bag in arbitrary order.
+     *
+     * @return an iterator that iterates over the items in this bag in arbitrary order
+     */
+    public Iterator<Item> iterator()  {
+        return new LinkedIterator(first);
     }
 
-    private class BagIterator implements Iterator<Item>{
-        private Node now = first;
+    // an iterator, doesn't implement remove() since it's optional
+    private class LinkedIterator implements Iterator<Item> {
+        private Node<Item> current;
 
-        @Override
-        public boolean hasNext() {
-            return now != null;
+        public LinkedIterator(Node<Item> first) {
+            current = first;
         }
 
-        @Override
+        public boolean hasNext()  { return current != null;                     }
+        public void remove()      { throw new UnsupportedOperationException();  }
+
         public Item next() {
-            if (!hasNext()){
-                throw new NoSuchElementException();
-            }
-            Item item = now.item;
-            now = now.next;
+            if (!hasNext()) throw new NoSuchElementException();
+            Item item = current.item;
+            current = current.next;
             return item;
         }
     }
 
+    /**
+     * Unit tests the {@code Bag} data type.
+     *
+     * @param args the command-line arguments
+     */
     public static void main(String[] args) {
         Bag<Integer> bag = new Bag<>();
         bag.add(1);

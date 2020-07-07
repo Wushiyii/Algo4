@@ -45,7 +45,21 @@ public class EdgeWeightedGraph {
     }
 
     public Iterable<Edge> edges() {
-        return null;
+        Bag<Edge> list = new Bag<>();
+        for (int v = 0; v < V; v++) {
+            int selfLoops = 0;
+            for (Edge e : adj(v)) {
+                if (e.other(v) > v) {
+                    list.add(e);
+                }
+                // add only one copy of each self loop (self loops will be consecutive)
+                else if (e.other(v) == v) {
+                    if (selfLoops % 2 == 0) list.add(e);
+                    selfLoops++;
+                }
+            }
+        }
+        return list;
     }
 
 }

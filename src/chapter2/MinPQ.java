@@ -50,6 +50,25 @@ public class MinPQ<Key> implements Iterable<Key>{
         assert isMinHeap();
     }
 
+    public MinPQ(Iterable<Key> iterable, int size){
+
+        Key[] keys = (Key[]) new Comparable[size];
+        int index = 0;
+
+        for (Key key : iterable) {
+            keys[index] = key;
+            index++;
+        }
+
+        n = keys.length;
+        pq = (Key[]) new Object[keys.length+1];
+        for (int i=0;i<n;i++)
+            pq[i+1] = keys[i];
+        for (int k=n/2;k>=1;k--)
+            sink(k);
+        assert isMinHeap();
+    }
+
     /*
         Returns true if this priority queue is empty
     */
