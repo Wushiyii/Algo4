@@ -1,4 +1,4 @@
-package leet.array;
+package leet.two_array;
 
 /**
  * 旋转矩阵
