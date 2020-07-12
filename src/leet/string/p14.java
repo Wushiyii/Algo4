@@ -1,0 +1,33 @@
+package leet.string;
+
+/**
+ * p14 - 最长公共前缀
+ * @author wgq
+ * @date 2020/7/12 12:01 上午
+ */
+public class p14 {
+
+    public static String longestCommonPrefix(String[] strs) {
+
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (i == strs[j].length() || strs[j].charAt(i) != c) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+
+        return strs[0];
+    }
+
+    public static void main(String[] args) {
+        String[] arr = {"dacecar", "dog","dar"};
+        System.out.println(longestCommonPrefix(arr));
+    }
+
+}
