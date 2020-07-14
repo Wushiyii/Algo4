@@ -1,6 +1,10 @@
 package leet.bfs;
 
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 /**
  * p279 - 完全平方数 BFS
@@ -10,60 +14,41 @@ import java.util.*;
 public class p279_perfect_squares_bfs {
 
     public int numSquares(int n) {
-        if (n <= 0) {
-            return n;
-        }
 
-        // 获取目标数下的平方数
-        List<Integer> squares = getSquares(n);
-        // mark集合
-        Set<Integer> visit = new HashSet<>();
         Queue<Integer> queue = new LinkedList<>();
+        Set<Integer> visit = new HashSet<>();
         int step = 0;
-
-        queue.offer(n);
         visit.add(n);
+        queue.offer(n);
 
         while (!queue.isEmpty()) {
             int size = queue.size();
             step++;
+
             for (int i = 0; i < size; i++) {
                 Integer cur = queue.poll();
-                for (Integer square : squares) {
-                    int next = cur - square;
 
-                    if (!visit.contains(next)) {
-                        if (next < 0) {
-                            break;
-                        }
-                        if (next == 0) {
-                            return step;
-                        }
-                        visit.add(next);
-                        queue.offer(next);
+                // 通过一个循环便利所有小于目标数的平方数
+                for (int j = 1; j * j <= n ; j++) {
+                    int next = cur - j*j;
+                    if (next == 0) {
+                        return step;
                     }
-
+                    if (!visit.contains(next)) {
+                        queue.add(next);
+                    }
+                    visit.add(next);
                 }
             }
         }
-
-        return n;
-
-    }
-
-    private static List<Integer> getSquares(int n) {
-        List<Integer> squares = new ArrayList<>();
-        for (int i = 1; i * i < n ; i++) {
-            squares.add(i*i);
-        }
-        return squares;
+        return step;
     }
 
 
     public static void main(String[] args) {
         p279_perfect_squares_bfs s = new p279_perfect_squares_bfs();
-//        System.out.println(s.numSquares(5));
+        System.out.println(s.numSquares(4));
         System.out.println(s.numSquares(12));
-//        System.out.println(s.numSquares(13));
+        System.out.println(s.numSquares(13));
     }
 }
