@@ -15,33 +15,32 @@ public class p279_perfect_squares_bfs {
 
     public int numSquares(int n) {
 
-        Queue<Integer> queue = new LinkedList<>();
         Set<Integer> visit = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
         int step = 0;
+
+        queue.add(n);
         visit.add(n);
-        queue.offer(n);
 
         while (!queue.isEmpty()) {
-            int size = queue.size();
             step++;
-
+            int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Integer cur = queue.poll();
-
-                // 通过一个循环便利所有小于目标数的平方数
-                for (int j = 1; j * j <= n ; j++) {
-                    int next = cur - j*j;
-                    if (next == 0) {
+                for (int j = 0; j*j <= n; j++) {
+                    int left = cur - j*j;
+                    if (left == 0) {
                         return step;
                     }
-                    if (!visit.contains(next)) {
-                        queue.add(next);
+                    if (!visit.contains(left)) {
+                        queue.add(left);
+                        visit.add(left);
                     }
-                    visit.add(next);
                 }
             }
         }
         return step;
+
     }
 
 
