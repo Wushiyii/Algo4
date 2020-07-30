@@ -40,6 +40,10 @@ public class MergeSort extends AbstractSort {
         }
     }
 
+    protected boolean less(int a, int b) {
+        return a < b;
+    }
+
     public static void main(String[] args) {
         int[] arr = new int[] {4,7,2,5,1,9,8,3,6,0,11,10,14,13,12};
         AbstractSort compareSort = new MergeSort();
